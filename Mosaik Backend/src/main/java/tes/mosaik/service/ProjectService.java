@@ -14,7 +14,7 @@ public interface ProjectService {
 
     List<Project> getProjectByTeam(User user, String category, String tag) throws Exception;
 
-    List<Project> getProjectById(Long projectID) throws Exception;
+    Project getProjectByID(Long projectID) throws Exception;
 
     void deleteProject(Long projectID, Long userID) throws Exception;
 
@@ -25,4 +25,6 @@ public interface ProjectService {
     void removeUserFromProject(Long projectID, Long userID) throws Exception;
 
     Chat getChatByProjectID(Long projectID) throws Exception;
+
+    List<Project> searchProjects(String keyword, User user) throws Exception;
 }
