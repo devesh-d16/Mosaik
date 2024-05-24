@@ -4,9 +4,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tes.mosaik.modal.Chat;
+import tes.mosaik.modal.Invitation;
 import tes.mosaik.modal.Project;
 import tes.mosaik.modal.User;
+import tes.mosaik.request.InviteRequest;
 import tes.mosaik.response.MessageResponse;
+import tes.mosaik.service.InvitationService;
 import tes.mosaik.service.ProjectService;
 import tes.mosaik.service.UserService;
 
@@ -18,10 +21,12 @@ public class ProjectController {
 
     private final ProjectService projectService;
     private final UserService userService;
+    private final InvitationService invitationService;
 
-    public ProjectController(ProjectService projectService, UserService userService) {
+    public ProjectController(ProjectService projectService, UserService userService, InvitationService invitationService) {
         this.projectService = projectService;
         this.userService = userService;
+        this.invitationService = invitationService;
     }
 
     @GetMapping
@@ -96,5 +101,29 @@ public class ProjectController {
         User user = userService.findUserProfileByJwt(jwt);
         Chat chat = projectService.getChatByProjectID(projectID);
         return new ResponseEntity<>(chat, HttpStatus.OK);
+    }
+
+    @PostMapping("/invite")
+    public ResponseEntity<MessageResponse> inviteProject(
+            @RequestBody InviteRequest request,
+            @RequestHeader("Authorization") String jwt,
+            @RequestBody Project project
+    ) throws Exception {
+        User user = userService.findUserProfileByJwt(jwt);
+        invitationService.sendInvitation(request.getEmail(), request.getProjectID());
+        MessageResponse response = new MessageResponse("invitation sent successfully");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/accept_invitation")
+    public ResponseEntity<Invitation> acceptInviteProject(
+            @RequestParam String token,
+            @RequestHeader("Authorization") String jwt,
+            @RequestBody Project project
+    ) throws Exception {
+        User user = userService.findUserProfileByJwt(jwt);
+        Invitation invitation = invitationService.acceptInvitation(token, user.getId());
+        projectService.addUserToProject(invitation.getProjectID(), user.getId());
+        return new ResponseEntity<>(invitation, HttpStatus.OK);
     }
 }
