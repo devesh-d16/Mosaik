@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.*;
 
@@ -21,7 +22,7 @@ public class Issue {
     private String status;
     private Long projectID;
     private String priority;
-    private LocalDate dueDate;
+    private LocalDateTime dueDate;
     private List<String> tags = new ArrayList<>();
 
     @ManyToOne
