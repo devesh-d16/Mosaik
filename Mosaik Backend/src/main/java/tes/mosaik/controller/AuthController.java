@@ -18,6 +18,7 @@ import tes.mosaik.repository.UserRepository;
 import tes.mosaik.request.LoginRequest;
 import tes.mosaik.response.AuthResponse;
 import tes.mosaik.service.CustomUserDetailsImpl;
+import tes.mosaik.service.SubscriptionService;
 
 @RestController
 @RequestMapping("/auth")
@@ -26,11 +27,13 @@ public class AuthController {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final CustomUserDetailsImpl customUserDetails;
+    private final SubscriptionService subscriptionService;
 
-    public AuthController(UserRepository userRepository, PasswordEncoder passwordEncoder, CustomUserDetailsImpl customUserDetails) {
+    public AuthController(UserRepository userRepository, PasswordEncoder passwordEncoder, CustomUserDetailsImpl customUserDetails, SubscriptionService subscriptionService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.customUserDetails = customUserDetails;
+        this.subscriptionService = subscriptionService;
     }
 
     @PostMapping("/signup")
@@ -47,6 +50,9 @@ public class AuthController {
         createdUser.setFullName(user.getFullName());
 
         User savedUser = userRepository.save(createdUser);
+
+        subscriptionService.createSubscription(savedUser);
+
         Authentication authentication = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
