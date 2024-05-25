@@ -6,5 +6,5 @@ import tes.mosaik.modal.Message;
 import java.util.List;
 
 public interface MessageRepository extends JpaRepository<Message, Long> {
-    public List<Message> findByChatIdOrderByCreatedAtAsc(Long chatId);
+    public List<Message> findByChatIdOrderByCreationDateTimeAsc(Long chatId);
 }
