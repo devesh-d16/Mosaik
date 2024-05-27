@@ -11,7 +11,7 @@ import {
 import React, { useState } from "react";
 import ProjectCard from "../Project/ProjectCard";
 
-const tags = [
+export const tags = [
   "All",
   "React",
   "NextJS",
@@ -23,7 +23,6 @@ const tags = [
   "Flask",
   "Django",
   "PostgreSQL",
-  "",
 ];
 
 const ProjectList = () => {
