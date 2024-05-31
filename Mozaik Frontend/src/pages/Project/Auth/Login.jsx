@@ -43,28 +43,28 @@ const Login = () => {
               </FormItem>
             )}
           />
-        </form>
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <Input
-                  {...field}
-                  type="text"
-                  className="border w-full border-gray-700 py-5 px-5"
-                  placeholder="password..."
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input
+                    {...field}
+                    type="text"
+                    className="border w-full border-gray-700 py-5 px-5"
+                    placeholder="password..."
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <Button type="submit" className="w-full mt-5">
-          Register
-        </Button>
+          <Button type="submit" className="w-full mt-5">
+            Register
+          </Button>
+        </form>
       </Form>
     </div>
   );

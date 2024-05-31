@@ -1,3 +1,4 @@
+import { register } from "@/Redux/Auth/Action";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -8,16 +9,20 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 
 const Signup = () => {
+  const dispatch = useDispatch();
   const form = useForm({
     // resolver:
     defaultValues: {
+      fullName: "",
       email: "",
       password: "",
     },
   });
   const onSubmit = (data) => {
+    dispatch(register(data));
     console.log("Create project data", data);
   };
   return (
@@ -42,8 +47,6 @@ const Signup = () => {
               </FormItem>
             )}
           />
-        </form>
-        <form className="space-y-3" onSubmit={form.handleSubmit(onSubmit)}>
           <FormField
             control={form.control}
             name="email"
@@ -61,28 +64,28 @@ const Signup = () => {
               </FormItem>
             )}
           />
-        </form>
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <Input
-                  {...field}
-                  type="text"
-                  className="border w-full border-gray-700 py-5 px-5"
-                  placeholder="password..."
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input
+                    {...field}
+                    type="text"
+                    className="border w-full border-gray-700 py-5 px-5"
+                    placeholder="password..."
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <Button type="submit" className="w-full mt-5">
-          Register
-        </Button>
+          <Button type="submit" className="w-full mt-5">
+            Register
+          </Button>
+        </form>
       </Form>
     </div>
   );
