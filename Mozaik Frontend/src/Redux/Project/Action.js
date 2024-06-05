@@ -16,7 +16,7 @@ import {
 } from "./Actiontypes";
 import api from "@/config/api";
 
-export const fetchProject =
+export const fetchProjects =
   ({ category, tag }) =>
   async (dispatch) => {
     dispatch({ type: FETCH_PROJECTS_REQUEST });
@@ -31,31 +31,28 @@ export const fetchProject =
     }
   };
 
-export const searchProject =
-  ({ keyword }) =>
-  async (dispatch) => {
-    dispatch({ type: SEARCH_PROJECT_REQUEST });
-    try {
-      const { data } = await api.get("/api/projects/search?keyword=" + keyword);
-      console.log("search projects", data);
-      dispatch({ type: SEARCH_PROJECT_SUCCESS, projects: data });
-    } catch (error) {
-      console.log("error", error);
-    }
-  };
+export const searchProjects = (keyword) => async (dispatch) => {
+  dispatch({ type: SEARCH_PROJECT_REQUEST });
+  try {
+    const { data } = await api.get("/api/projects/search?keyword=" + keyword);
+    console.log("search projects", data);
+    dispatch({ type: SEARCH_PROJECT_SUCCESS, projects: data });
+  } catch (error) {
+    console.log("error", error);
+  }
+};
 
-export const createProject =
-  ({ projectData }) =>
-  async (dispatch) => {
-    dispatch({ type: CREATE_PROJECT_REQUEST });
-    try {
-      const { data } = await api.post("/api/projects", projectData);
-      console.log("search projects", data);
-      dispatch({ type: CREATE_PROJECT_SUCCESS, projects: data });
-    } catch (error) {
-      console.log("error : ", error);
-    }
-  };
+export const createProject = (projectData) => async (dispatch) => {
+  dispatch({ type: CREATE_PROJECT_REQUEST });
+  console.log(projectData);
+  try {
+    const { data } = await api.post("/api/projects", projectData);
+    console.log("search projects", data);
+    dispatch({ type: CREATE_PROJECT_SUCCESS, projects: data });
+  } catch (error) {
+    console.log("error : ", error);
+  }
+};
 
 export const fetchProjectByID =
   ({ id }) =>
@@ -75,7 +72,7 @@ export const deleteProject =
   async (dispatch) => {
     dispatch({ type: DELETE_PROJECT_REQUEST });
     try {
-      const { data } = await api.delete("/api/projects" + projectID);
+      const { data } = await api.delete("/api/projects/" + projectID);
       console.log("delete project", data);
       dispatch({ type: DELETE_PROJECT_SUCCESS, projectID });
     } catch (error) {

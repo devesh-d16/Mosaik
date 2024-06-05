@@ -1,3 +1,4 @@
+import { deleteProject } from "@/Redux/Project/Action";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -8,10 +9,15 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { DotFilledIcon, DotsVerticalIcon } from "@radix-ui/react-icons";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-const ProjectCard = () => {
+const ProjectCard = ({ item }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const handleDelete = () => {
+    dispatch(deleteProject({ projectID: item.id }));
+  };
   return (
     <Card className="p-5 w-full lg:max-w-3xl">
       <div className="space-y-5">
@@ -22,10 +28,10 @@ const ProjectCard = () => {
                 onClick={() => navigate("/project/3")}
                 className="cursor-pointer font-bold text-lg"
               >
-                Create Ecommerce Project
+                {item.name}
               </h1>
               <DotFilledIcon />
-              <p className="text-sm text-gray-400">Full Stack</p>
+              <p className="text-sm text-gray-400">{item.category}</p>
             </div>
             <div>
               <DropdownMenu>
@@ -36,19 +42,19 @@ const ProjectCard = () => {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
                   <DropdownMenuItem>Update</DropdownMenuItem>
-                  <DropdownMenuItem>Delete</DropdownMenuItem>
+                  <DropdownMenuItem onClick={handleDelete}>
+                    Delete
+                  </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
           </div>
-          <p className="text-gray-500 text-sm">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          </p>
+          <p className="text-gray-500 text-sm">{item.description}</p>
         </div>
         <div className="flex flex-wrap gap-2 items-center">
-          {[1, 1, 1, 1].map((item) => (
-            <Badge key={item} variant="outline">
-              {"frontend"}
+          {item.tags.map((tag) => (
+            <Badge key={tag} variant="outline">
+              {tag}
             </Badge>
           ))}
         </div>

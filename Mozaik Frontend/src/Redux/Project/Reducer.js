@@ -38,7 +38,7 @@ export const projectReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        projects: action.payload,
+        projects: action.projects,
         error: null,
       };
 
@@ -46,7 +46,7 @@ export const projectReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        searchProjects: action.payload,
+        searchProjects: action.projects,
         error: null,
       };
 
@@ -54,7 +54,7 @@ export const projectReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        projects: [...state.projects, action.project],
+        projects: [...state.projects, action.projects],
         error: null,
       };
 
@@ -71,7 +71,7 @@ export const projectReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         projects: state.projects.filter(
-          (project) => project.id === action.projectID
+          (project) => project.id !== action.projectID
         ),
         error: null,
       };

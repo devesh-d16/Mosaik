@@ -21,7 +21,7 @@ import { Cross1Icon } from "@radix-ui/react-icons";
 import { useDispatch } from "react-redux";
 import { createProject } from "@/Redux/Project/Action";
 
-const CreateFormProject = () => {
+const CreateProjectForm = () => {
   const dispatch = useDispatch();
   const handleTagsChange = (newValue) => {
     const currentTags = form.getValues("tags");
@@ -40,10 +40,12 @@ const CreateFormProject = () => {
       tags: [],
     },
   });
+
   const onSubmit = (data) => {
     dispatch(createProject(data));
     console.log("Create project data", data);
   };
+
   return (
     <div>
       <Form {...form}>
@@ -143,7 +145,7 @@ const CreateFormProject = () => {
                       className="cursor-pointer flex rounded-full items-center border gap-2 px-4 py-1"
                     >
                       <span className="text-sm">{item}</span>
-                      <Cross1Icon className="h-3  w-3" />
+                      <Cross1Icon className="h-3 w-3" />
                     </div>
                   ))}
                 </div>
@@ -171,4 +173,4 @@ const CreateFormProject = () => {
   );
 };
 
-export default CreateFormProject;
+export default CreateProjectForm;
