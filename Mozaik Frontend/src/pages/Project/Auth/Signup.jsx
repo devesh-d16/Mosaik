@@ -16,9 +16,9 @@ const Signup = () => {
   const form = useForm({
     // resolver:
     defaultValues: {
-      fullName: "",
       email: "",
       password: "",
+      fullName: "",
     },
   });
   const onSubmit = (data) => {

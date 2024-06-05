@@ -6,11 +6,23 @@ import ProjectDetails from "./pages/ProjectDetails/ProjectDetails";
 import IssueDetails from "./pages/IssueDetails/IssueDetails";
 import Subscription from "./pages/Subscription/Subscription";
 import Auth from "./pages/Project/Auth/Auth";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getUser } from "./Redux/Auth/Action";
+import { store } from "./Redux/Store";
 
 function App() {
+  const dispatch = useDispatch();
+  const { auth } = useSelector((store) => store);
+
+  useEffect(() => {
+    dispatch(getUser());
+  }, [auth.jwt]);
+
+  console.log(auth);
   return (
     <>
-      {false ? (
+      {auth.user ? (
         <div>
           <Navbar />
           <Routes>

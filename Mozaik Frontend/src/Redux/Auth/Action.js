@@ -4,9 +4,7 @@ import axios from "axios";
 
 export const register = (userData) => async (dispatch) => {
   dispatch({ type: actionTypes.REGISTER_REQUEST });
-  console.log("hehe");
   try {
-    console.log("hihi");
     const { data } = await axios.post(`${API_BASE_URL}/auth/signup`, userData);
     if (data.jwt) {
       localStorage.setItem("jwt", data.jwt);
@@ -44,11 +42,10 @@ export const getUser = () => async (dispatch) => {
         Authorization: `Bearer ${localStorage.getItem("jwt")}`,
       },
     });
-    if (data.jwt) {
-      localStorage.setItem("jwt", data.jwt);
-      dispatch({ type: actionTypes.GET_USER_SUCCESS, data });
-    }
-    console.log("Register success", data);
+
+    dispatch({ type: actionTypes.GET_USER_SUCCESS, payload: data });
+
+    console.log("User success", data);
   } catch (error) {
     console.log(error);
   }

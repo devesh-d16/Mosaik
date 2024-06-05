@@ -53,7 +53,7 @@ export const createProject =
       console.log("search projects", data);
       dispatch({ type: CREATE_PROJECT_SUCCESS, projects: data });
     } catch (error) {
-      console.log("error", error);
+      console.log("error : ", error);
     }
   };
 
