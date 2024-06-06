@@ -11,7 +11,7 @@ import {
 import { useState } from "react";
 import ProjectCard from "../Project/ProjectCard";
 import { useDispatch, useSelector } from "react-redux";
-import { searchProjects } from "@/Redux/Project/Action";
+import { fetchProjects, searchProjects } from "@/Redux/Project/Action";
 
 export const tags = [
   "All",
@@ -32,14 +32,27 @@ const ProjectList = () => {
   const { project } = useSelector((store) => store);
   const dispatch = useDispatch();
 
-  const handleFilterChange = (section, value) => {
-    console.log("value", value, section);
+  const handleFilterCategory = (value) => {
+    if (value === "all") {
+      dispatch(fetchProjects({}));
+    } else {
+      dispatch(fetchProjects({ category: value }));
+    }
+  };
+
+  const handleFilterTags = (value) => {
+    if (value === "All") {
+      dispatch(fetchProjects({}));
+    } else {
+      dispatch(fetchProjects({ tag: value }));
+    }
   };
 
   const handleSearchChange = (e) => {
     setKeyword(e.target.value);
     dispatch(searchProjects(e.target.value));
   };
+
   return (
     <>
       <div className="relative px-5 lg:px-0 lg:flex gap-5 justify-center py-5">
@@ -59,9 +72,7 @@ const ProjectList = () => {
                     <RadioGroup
                       className="space-y-3 pt-5"
                       defaultValue="all"
-                      onValueChange={(value) =>
-                        handleFilterChange("category", value)
-                      }
+                      onValueChange={(value) => handleFilterCategory(value)}
                     >
                       <div className="flex items-center gap-2">
                         <RadioGroupItem value="all" id="r1" />
@@ -88,9 +99,7 @@ const ProjectList = () => {
                     <RadioGroup
                       className="space-y-3 pt-5"
                       defaultValue="all"
-                      onValueChange={(value) =>
-                        handleFilterChange("tag", value)
-                      }
+                      onValueChange={(value) => handleFilterTags(value)}
                     >
                       {tags.map((item) => (
                         <div key={item} className="flex items-center gap-2">

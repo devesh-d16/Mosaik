@@ -13,9 +13,20 @@ import { PlusIcon } from "@radix-ui/react-icons";
 import InviteUserForm from "./InviteUserForm";
 import IssueList from "./IssueList";
 import ChatBox from "./ChatBox";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProjectByID } from "@/Redux/Project/Action";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 const ProjectDetails = () => {
+  const dispatch = useDispatch();
+  const { project } = useSelector((store) => store);
+  const { id } = useParams();
   const handleProjectInvitation = () => {};
+
+  useEffect(() => {
+    dispatch(fetchProjectByID(id));
+  }, [id]);
   return (
     <>
       <div className=" mt-5 lg:px-10">
@@ -23,28 +34,24 @@ const ProjectDetails = () => {
           <ScrollArea className="h-screen lg:w-[69%] pr-2">
             <div className="text-gray-400 pb-10 w-full">
               <h1 className=" text-lg font-semibold pb-5">
-                Create Ecommerce Website Using React
+                {project.projectDetails?.name}
               </h1>
               <div className=" space-y-5 pb-10 text-sm">
                 <p className="w-full md:max-w-lg lg:max-w-xl">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Soluta nemo praesentium eveniet culpa, nobis quo saepe
-                  adipisci, beatae, vero quibusdam voluptate laboriosam corporis
-                  nesciunt neque. Consequatur reiciendis doloremque recusandae
-                  repellat?
+                  {project.projectDetails?.description}
                 </p>
                 <div className="flex">
                   <p className="w-36">Project Lead :</p>
-                  <p>Devesh</p>
+                  <p>{project.projectDetails?.owner.fullName}</p>
                 </div>
 
                 <div className="flex">
                   <div className="flex">
                     <p className="w-36">Members :</p>
                     <div className=" flex items-center gap-2 ">
-                      {[1, 1, 1, 1].map((item) => (
+                      {project.projectDetails?.team.map((item) => (
                         <Avatar className="cursor-pointer" key={item}>
-                          <AvatarFallback>D</AvatarFallback>
+                          <AvatarFallback>{item.fullName[0]}</AvatarFallback>
                         </Avatar>
                       ))}
                     </div>
@@ -72,12 +79,12 @@ const ProjectDetails = () => {
 
                 <div className="flex">
                   <p className="w-36">Category :</p>
-                  <p>Full Stack</p>
+                  <p>{project.projectDetails?.category}</p>
                 </div>
 
                 <div className="flex">
                   <p className="w-36">Status :</p>
-                  <Badge>Devesh</Badge>
+                  <Badge>{project.projectDetails?.status}</Badge>
                 </div>
               </div>
 
