@@ -39,7 +39,7 @@ export const issueReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        issues: [...state.issues, action.issue],
+        issues: [...state.issues, action.issues],
       };
 
     case actionTypes.ASSIGNED_ISSUE_TO_USER_SUCCESS:
@@ -55,7 +55,7 @@ export const issueReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        issues: state.issues.filter((issue) => issue.id !== action.issueID),
+        issues: state.issues.filter((issue) => issue.id !== action.id),
       };
 
     case actionTypes.FETCH_ISSUES_FAILURE:

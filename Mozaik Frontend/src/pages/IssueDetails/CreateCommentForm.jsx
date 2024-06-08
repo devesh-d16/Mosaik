@@ -1,3 +1,4 @@
+import { createComment } from "@/Redux/Comment/Action";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,8 +10,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 
 const CreateCommentForm = ({ issueID }) => {
+  const dispatch = useDispatch();
   const form = useForm({
     // resolver:
     defaultValues: {
@@ -18,6 +21,7 @@ const CreateCommentForm = ({ issueID }) => {
     },
   });
   const onSubmit = (data) => {
+    dispatch(createComment({ content: data.content, issueID }));
     console.log("Create project data", data);
   };
   return (

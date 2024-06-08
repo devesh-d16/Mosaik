@@ -32,7 +32,7 @@ const Navbar = () => {
           Project Management
         </p>
         <Dialog>
-          <DialogTrigger>
+          <DialogTrigger asChild>
             <Button variant="ghost">New Project</Button>
           </DialogTrigger>
 
@@ -47,7 +47,7 @@ const Navbar = () => {
       </div>
       <div className="flex gap-3 items-center">
         <DropdownMenu>
-          <DropdownMenuTrigger>
+          <DropdownMenuTrigger asChild>
             <Button
               variant="outline"
               size="icon"

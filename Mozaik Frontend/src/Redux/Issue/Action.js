@@ -1,6 +1,45 @@
 import api from "@/config/api";
 import * as actionTypes from "./ActionTypes";
 
+export const createIssue = (isseuData) => {
+  return async (dispatch) => {
+    dispatch({ type: actionTypes.CREATE_ISSUE_REQUEST });
+    try {
+      const response = await api.post(`/api/issues`, isseuData);
+      dispatch({
+        type: actionTypes.CREATE_ISSUE_SUCCESS,
+        issues: response.data,
+      });
+      console.log("issue created successfully : " + response.data);
+    } catch (error) {
+      console.log("error : " + error);
+      dispatch({
+        type: actionTypes.CREATE_ISSUE_FAILURE,
+        error: error.message,
+      });
+    }
+  };
+};
+
+export const deleteIssue = (id) => {
+  return async (dispatch) => {
+    dispatch({ type: actionTypes.DELETE_ISSUE_REQUEST });
+    try {
+      const response = await api.delete(`/api/issues/` + id);
+      dispatch({
+        type: actionTypes.DELETE_ISSUE_SUCCESS,
+        issues: response.data,
+      });
+      console.log("issue deleted successfully : " + response.data);
+    } catch (error) {
+      console.log("error : " + error);
+      dispatch({
+        type: actionTypes.DELETE_ISSUE_FAILURE,
+        error: error.message,
+      });
+    }
+  };
+};
 export const fetchIssues = (id) => {
   return async (dispatch) => {
     dispatch({ type: actionTypes.FETCH_ISSUES_REQUEST });

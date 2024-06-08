@@ -6,7 +6,7 @@ export const createComment = (commentData) => {
     dispatch({ type: actionTypes.CREATE_COMMENT_REQUEST });
     try {
       const response = await api.post(`/api/comments`, commentData);
-      console.log("comment created", response.data);
+      console.log("comment created : ", response.data);
       dispatch({
         type: actionTypes.CREATE_COMMENT_SUCCESS,
         comment: response.data,
