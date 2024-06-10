@@ -41,6 +41,9 @@ export const fetchComments = (issueID) => {
     dispatch({ type: actionTypes.FETCH_COMMENTS_REQUEST });
     try {
       const response = await api.get(`/api/comments/${issueID}`);
+      console.log(
+        "fetched comment : " + JSON.stringify(response.data, null, 4)
+      );
       dispatch({
         type: actionTypes.FETCH_COMMENTS_SUCCESS,
         comments: response.data,

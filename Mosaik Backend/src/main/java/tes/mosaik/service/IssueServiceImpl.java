@@ -60,8 +60,8 @@ public class IssueServiceImpl implements IssueService{
     }
 
     @Override
-    public Issue addUserToIssue(Long issueID, Long userID) throws Exception {
-        User user = userService.findUserProfileByID(issueID);
+    public Issue assignIssueToUser(Long issueID, Long userID) throws Exception {
+        User user = userService.findUserProfileByID(userID);
         Issue issue = getIssueByID(issueID);
 
         issue.setAssignee(user);

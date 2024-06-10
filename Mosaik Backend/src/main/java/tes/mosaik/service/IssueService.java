@@ -5,7 +5,6 @@ import tes.mosaik.modal.User;
 import tes.mosaik.request.IssueRequest;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface IssueService {
 
@@ -17,7 +16,7 @@ public interface IssueService {
 
     void deleteIssue(Long issueID, Long userID) throws Exception;
 
-    Issue addUserToIssue(Long issueID, Long userID) throws Exception;
+    Issue assignIssueToUser(Long issueID, Long userID) throws Exception;
 
     Issue updateStatus(Long issueID, String status) throws Exception;
 

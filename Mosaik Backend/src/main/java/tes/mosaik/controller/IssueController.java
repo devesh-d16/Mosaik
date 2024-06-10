@@ -6,12 +6,10 @@ import tes.mosaik.DTO.IssueDTO;
 import tes.mosaik.modal.Issue;
 import tes.mosaik.modal.User;
 import tes.mosaik.request.IssueRequest;
-import tes.mosaik.response.AuthResponse;
 import tes.mosaik.response.MessageResponse;
 import tes.mosaik.service.IssueService;
 import tes.mosaik.service.UserService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -79,11 +77,11 @@ public class IssueController {
     }
 
     @PutMapping("/{issueID}/assignee/{userID}")
-    public ResponseEntity<Issue> addUserToIssue(
+    public ResponseEntity<Issue> assignIssueToUser(
             @PathVariable Long issueID,
             @PathVariable Long userID
     ) throws Exception {
-        Issue issue = issueService.addUserToIssue(issueID, userID);
+        Issue issue = issueService.assignIssueToUser(issueID, userID);
         return ResponseEntity.ok(issue);
     }
 

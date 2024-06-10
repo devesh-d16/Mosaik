@@ -25,7 +25,6 @@ const IssueList = ({ title, status }) => {
   const dispatch = useDispatch();
   const { issue } = useSelector((store) => store);
   const { id } = useParams();
-  console.log(id);
   useEffect(() => {
     dispatch(fetchIssues(id));
   }, [id]);

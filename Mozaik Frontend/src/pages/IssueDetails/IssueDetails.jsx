@@ -23,14 +23,19 @@ const IssueDetails = () => {
   const { issue, comment } = useSelector((store) => store);
 
   const handleUpdateIssueStatus = (status) => {
-    dispatch(updateIssueStatus({ id: issueID, status }));
+    dispatch(updateIssueStatus({ status, id: issueID }));
     console.log(status);
   };
 
   useEffect(() => {
-    dispatch(fetchComments(issueID));
     dispatch(fetchIssueById(issueID));
-  }, [issueID]);
+    dispatch(fetchComments(issueID));
+  }, [issueID, dispatch]);
+
+  if (!issue.issueDetails || !comment.comments) {
+    return <div>Loading...</div>;
+  }
+  console.log("hehe" + JSON.stringify(comment, null, 4));
   return (
     <div className="px-20 py-8 text-gray-400">
       <div className="flex justify-between border p-10 rounded-lg">

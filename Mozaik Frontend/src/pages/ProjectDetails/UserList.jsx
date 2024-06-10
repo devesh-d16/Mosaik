@@ -6,8 +6,11 @@ const UserList = ({ issueDetails }) => {
   const { project } = useSelector((store) => store);
   const dispatch = useDispatch();
   const handleAssignIssueToUser = (userID) => {
+    console.log(userID + " hehe " + issueDetails.id);
     dispatch(assignedUserToIssue({ issueID: issueDetails.id, userID }));
   };
+
+  console.log("hihih " + JSON.stringify(project.projectDetails?.team, null, 4));
   return (
     <>
       <div className="space-y-2">
@@ -20,7 +23,7 @@ const UserList = ({ issueDetails }) => {
           <div
             onClick={() => handleAssignIssueToUser(item.id)}
             key={item}
-            className="py-2 group hover:bg-slate-800 cursor-pointer flex items-center space-x-4 rounded-md border px-4"
+            className="py-2 hover:bg-slate-800 cursor-pointer flex items-center space-x-4 rounded-md border px-4"
           >
             <Avatar>
               <AvatarFallback>{item.fullName[0]}</AvatarFallback>
