@@ -8,9 +8,9 @@ export const sendMessage = (messageData) => {
       const response = await api.post("api/messages/send", messageData);
       dispatch({
         type: actionTypes.SEND_MESSAGE_SUCCESS,
-        message: response.data,
+        messages: response.data,
       });
-      console.log("message sent : " + response.data);
+      console.log("message sent : " + JSON.stringify(response.data, null, 4));
       console.log("message sent : " + messageData);
     } catch (error) {
       console.log(error);
@@ -55,6 +55,19 @@ export const fetchChatMessages = (chatID) => {
         messages: response.data,
       });
     } catch (error) {
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log("Error", error.message);
+      }
       console.log("error : " + error);
       dispatch({
         type: actionTypes.FETCH_CHAT_MESSAGE_FAILURE,

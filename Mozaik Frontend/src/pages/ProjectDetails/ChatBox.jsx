@@ -1,4 +1,8 @@
-import { fetchChatMessages, sendMessage } from "@/Redux/Chat/Action";
+import {
+  fetchChatByProject,
+  fetchChatMessages,
+  sendMessage,
+} from "@/Redux/Chat/Action";
 import { fetchProjectByID } from "@/Redux/Project/Action";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -15,27 +19,35 @@ const ChatBox = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
 
-  useEffect(() => {
-    dispatch(fetchProjectByID(id));
-  }, []);
-
-  useEffect(() => {
-    dispatch(fetchChatMessages(chat.chat?.id));
-  }, []);
   const handleSendMessage = () => {
-    dispatch(
-      sendMessage({
-        senderID: auth.user?.id,
-        projectID: id,
-        content: message,
-      })
-    );
-    setMessage("");
-    console.log("message : ", message);
+    if (chat.chat?.id) {
+      dispatch(
+        sendMessage({
+          senderID: auth.user?.id,
+          projectID: id,
+          content: message,
+        })
+      );
+      setMessage("");
+      console.log("message : ", message);
+    } else {
+      console.error("Chat ID is not available");
+    }
   };
+
   const handleMessageChange = (e) => {
     setMessage(e.target.value);
   };
+
+  useEffect(() => {
+    dispatch(fetchChatByProject(id));
+  }, [id, dispatch]);
+
+  useEffect(() => {
+    if (chat.chat?.id) {
+      dispatch(fetchChatMessages(chat.chat.id));
+    }
+  }, [chat.chat?.id, dispatch]);
 
   return (
     <div className="sticky">

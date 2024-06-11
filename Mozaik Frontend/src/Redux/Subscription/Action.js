@@ -5,7 +5,7 @@ export const getUserSubscription = (jwt) => {
   return async (dispatch) => {
     dispatch({ type: actionTypes.GET_USER_SUBSCRIPTION_REQUEST });
     try {
-      const response = await api.get(`/api/subscriptions/user`, {
+      const response = await api.get(`/api/subscription/user`, {
         headers: {
           Authorization: `Bearer ${jwt}`,
         },
@@ -29,7 +29,10 @@ export const upgradeSubscription = ({ planType }) => {
   return async (dispatch) => {
     dispatch({ type: actionTypes.UPGRADE_SUBSCRIPTION_REQUEST });
     try {
-      const response = await api.get(`/api/subscriptions/upgrade`, null, {
+      const response = await api.patch(`/api/subscription/upgrade`, null, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        },
         params: {
           planType: planType,
         },
