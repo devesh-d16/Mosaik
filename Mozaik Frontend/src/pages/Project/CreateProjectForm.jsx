@@ -23,16 +23,7 @@ import { createProject } from "@/Redux/Project/Action";
 
 const CreateProjectForm = () => {
   const dispatch = useDispatch();
-  const handleTagsChange = (newValue) => {
-    const currentTags = form.getValues("tags");
-    const updatedTags = currentTags.includes(newValue)
-      ? currentTags.filter((tag) => tag !== newValue)
-      : [...currentTags, newValue];
-
-    form.setValue("tags", updatedTags);
-  };
   const form = useForm({
-    // resolver:
     defaultValues: {
       name: "",
       description: "",
@@ -40,6 +31,14 @@ const CreateProjectForm = () => {
       tags: [],
     },
   });
+
+  const handleTagsChange = (newValue) => {
+    const currentTags = form.getValues("tags");
+    const updatedTags = currentTags.includes(newValue)
+      ? currentTags.filter((tag) => tag !== newValue)
+      : [...currentTags, newValue];
+    form.setValue("tags", updatedTags);
+  };
 
   const onSubmit = (data) => {
     dispatch(createProject(data));
@@ -91,12 +90,8 @@ const CreateProjectForm = () => {
               <FormItem>
                 <FormControl>
                   <Select
-                    defaultValue="fullstack"
                     value={field.value}
-                    onValueChange={(value) => {
-                      field.onChange(value);
-                    }}
-                    // className="border w-full border-gray-700 py-5 px-5"
+                    onValueChange={(value) => field.onChange(value)}
                   >
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="Category" />
@@ -118,12 +113,7 @@ const CreateProjectForm = () => {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Select
-                    onValueChange={(value) => {
-                      handleTagsChange(value);
-                    }}
-                    // className="border w-full border-gray-700 py-5 px-5"
-                  >
+                  <Select onValueChange={handleTagsChange}>
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="Tags" />
                     </SelectTrigger>
@@ -136,7 +126,6 @@ const CreateProjectForm = () => {
                     </SelectContent>
                   </Select>
                 </FormControl>
-
                 <div className="flex gap-1 flex-wrap">
                   {field.value.map((item) => (
                     <div
@@ -153,20 +142,11 @@ const CreateProjectForm = () => {
               </FormItem>
             )}
           />
-          <DialogClose>
-            {false ? (
-              <div>
-                <p>
-                  You can create only 3 project with three plan, please upgrade
-                  your plan.
-                </p>
-              </div>
-            ) : (
-              <Button type="submit" className="w-full mt-5">
-                Create Project
-              </Button>
-            )}
-          </DialogClose>
+          <div className="w-full mt-5">
+            <DialogClose asChild>
+              <Button type="submit">Create Project</Button>
+            </DialogClose>
+          </div>
         </form>
       </Form>
     </div>

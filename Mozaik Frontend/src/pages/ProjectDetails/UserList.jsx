@@ -3,14 +3,13 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useDispatch, useSelector } from "react-redux";
 
 const UserList = ({ issueDetails }) => {
-  const { project } = useSelector((store) => store);
+  const { team } = useSelector((store) => store.project.projectDetails); // Only select team from the projectDetails slice of the state
   const dispatch = useDispatch();
+
   const handleAssignIssueToUser = (userID) => {
-    console.log(userID + " hehe " + issueDetails.id);
     dispatch(assignedUserToIssue({ issueID: issueDetails.id, userID }));
   };
 
-  console.log("hihih " + JSON.stringify(project.projectDetails?.team, null, 4));
   return (
     <>
       <div className="space-y-2">
@@ -19,7 +18,7 @@ const UserList = ({ issueDetails }) => {
             {issueDetails.assignee?.fullName || "Unassigned"}
           </p>
         </div>
-        {project.projectDetails?.team.map((item) => (
+        {team.map((item) => (
           <div
             onClick={() => handleAssignIssueToUser(item.id)}
             key={item}
@@ -40,4 +39,5 @@ const UserList = ({ issueDetails }) => {
     </>
   );
 };
+
 export default UserList;

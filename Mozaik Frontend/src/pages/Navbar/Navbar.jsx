@@ -18,16 +18,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/Redux/Auth/Action";
 
 const Navbar = () => {
-  const { auth } = useSelector((store) => store);
+  const auth = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleLogout = () => {
     dispatch(logout());
   };
+
   return (
     <div className="border-b py-4 px-5 flex items-center justify-between">
-      <div className="flex item-center gap-3">
+      <div className="flex items-center gap-3">
         <p onClick={() => navigate("/")} className="cursor-pointer">
           Project Management
         </p>
@@ -35,7 +36,6 @@ const Navbar = () => {
           <DialogTrigger asChild>
             <Button variant="ghost">New Project</Button>
           </DialogTrigger>
-
           <DialogContent>
             <DialogHeader>Create New Project</DialogHeader>
             <CreateFormProject />
@@ -52,6 +52,7 @@ const Navbar = () => {
               variant="outline"
               size="icon"
               className="rounded-full border-2 border-gray-500"
+              aria-label="User menu"
             >
               <PersonIcon />
             </Button>

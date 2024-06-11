@@ -15,12 +15,12 @@ import AcceptInvitation from "./pages/Project/AcceptInvitation";
 
 function App() {
   const dispatch = useDispatch();
-  const { auth } = useSelector((store) => store);
+  const auth = useSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(getUser());
     dispatch(fetchProjects({}));
-  }, [auth.jwt]);
+  }, [dispatch, auth.jwt]);
 
   return (
     <>

@@ -11,7 +11,11 @@ const CommentCard = ({ item }) => {
     dispatch(deleteComment(item.id));
   };
 
-  console.log("item" + JSON.stringify(item, null, 4));
+  // Check if item is defined before rendering
+  if (!item) {
+    return null; // or any placeholder if necessary
+  }
+
   return (
     <div className="flex justify-between">
       <div className="flex items-center gap-4">

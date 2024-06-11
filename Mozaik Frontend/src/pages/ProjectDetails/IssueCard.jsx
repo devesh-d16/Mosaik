@@ -20,6 +20,7 @@ const IssueCard = ({ item, projectID }) => {
   const handleIssueDelete = () => {
     dispatch(deleteIssue(item.id));
   };
+
   return (
     <Card className="rounded-md py-1 pb-2">
       <CardHeader className="py-0 pb-1">
@@ -31,7 +32,7 @@ const IssueCard = ({ item, projectID }) => {
             {item.title}
           </CardTitle>
           <DropdownMenu>
-            <DropdownMenuTrigger>
+            <DropdownMenuTrigger asChild>
               <Button className="rounded-full" size="icon" variant="ghost">
                 <DotsVerticalIcon />
               </Button>
@@ -50,8 +51,8 @@ const IssueCard = ({ item, projectID }) => {
       <CardContent className="py-0">
         <div className="flex items-center justify-between">
           <p>FBP - {1}</p>
-          <DropdownMenu className="w-[30rem] border border-red-400">
-            <DropdownMenuTrigger>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
               <Button
                 size="icon"
                 className="bg-gray-900 hover:text-black text-white rounded-full"

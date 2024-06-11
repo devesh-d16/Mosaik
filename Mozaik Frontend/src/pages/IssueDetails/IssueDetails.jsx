@@ -20,7 +20,9 @@ import { fetchComments } from "@/Redux/Comment/Action";
 const IssueDetails = () => {
   const { projectID, issueID } = useParams();
   const dispatch = useDispatch();
-  const { issue, comment } = useSelector((store) => store);
+
+  const issueDetails = useSelector((store) => store.issue.issueDetails);
+  const comments = useSelector((store) => store.comment.comments);
 
   const handleUpdateIssueStatus = (status) => {
     dispatch(updateIssueStatus({ status, id: issueID }));
@@ -32,22 +34,22 @@ const IssueDetails = () => {
     dispatch(fetchComments(issueID));
   }, [issueID, dispatch]);
 
-  if (!issue.issueDetails || !comment.comments) {
+  if (!issueDetails || !comments) {
     return <div>Loading...</div>;
   }
-  console.log("hehe" + JSON.stringify(comment, null, 4));
+
   return (
     <div className="px-20 py-8 text-gray-400">
       <div className="flex justify-between border p-10 rounded-lg">
         <ScrollArea className="h-[80vh] w-[60%]">
           <div>
             <h1 className="text-lg font-semibold text-gray-400">
-              {issue.issueDetails?.title}
+              {issueDetails?.title}
             </h1>
             <div className="py-5">
               <h2 className="font-semibold text-gray-400">Description</h2>
               <p className="text-gray-400 text-sm mt-3">
-                {issue.issueDetails?.description}
+                {issueDetails?.description}
               </p>
             </div>
             <div className="mt-5">
@@ -67,8 +69,8 @@ const IssueDetails = () => {
                 <TabsContent value="comments">
                   <CreateCommentForm issueID={issueID} />
                   <div className="mt-8 space-y-6">
-                    {comment.comments.map((item) => (
-                      <CommentCard item={item} key={item} />
+                    {comments.map((item) => (
+                      <CommentCard item={item} key={item.id} />
                     ))}
                   </div>
                 </TabsContent>
@@ -93,14 +95,14 @@ const IssueDetails = () => {
               <div className="space-y-7">
                 <div className="flex gap-10 items-center">
                   <p className="w-[7rem]">Assignee</p>
-                  {issue.issueDetails?.assignee?.fullName ? (
+                  {issueDetails?.assignee?.fullName ? (
                     <div className="flex items-center gap-3">
                       <Avatar className="h-8 w-8 text-xs">
                         <AvatarFallback>
-                          {issue.issueDetails?.assignee?.fullName[0]}
+                          {issueDetails?.assignee?.fullName[0]}
                         </AvatarFallback>
                       </Avatar>
-                      <p>{issue.issueDetails?.assignee?.fullName}</p>
+                      <p>{issueDetails?.assignee?.fullName}</p>
                     </div>
                   ) : (
                     <p>unassigned</p>
@@ -112,7 +114,7 @@ const IssueDetails = () => {
                 </div>
                 <div className="flex gap-10 items-center">
                   <p className="w-[7rem]">Status</p>
-                  <Badge>{issue.issueDetails?.status}</Badge>
+                  <Badge>{issueDetails?.status}</Badge>
                 </div>
                 <div className="flex gap-10 items-center">
                   <p className="w-[7rem]">Release</p>

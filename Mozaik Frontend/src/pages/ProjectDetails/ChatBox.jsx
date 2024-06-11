@@ -3,7 +3,6 @@ import {
   fetchChatMessages,
   sendMessage,
 } from "@/Redux/Chat/Action";
-import { fetchProjectByID } from "@/Redux/Project/Action";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,7 +14,10 @@ import { useParams } from "react-router-dom";
 
 const ChatBox = () => {
   const [message, setMessage] = useState("");
-  const { auth, chat } = useSelector((store) => store);
+  const { auth, chat } = useSelector((state) => ({
+    auth: state.auth,
+    chat: state.chat,
+  }));
   const dispatch = useDispatch();
   const { id } = useParams();
 
@@ -29,7 +31,6 @@ const ChatBox = () => {
         })
       );
       setMessage("");
-      console.log("message : ", message);
     } else {
       console.error("Chat ID is not available");
     }
@@ -54,9 +55,9 @@ const ChatBox = () => {
       <div className="border rounded-lg">
         <h1 className="border-b p-5">Chat Box</h1>
         <ScrollArea className="h-[32rem] w-full p-5 flex gap-3 flex-col">
-          {chat.messages?.map((item, index) =>
+          {chat.messages?.map((item) =>
             item.sender.id !== auth.user.id ? (
-              <div className="flex gap-2 mb-2 justify-start" key={item}>
+              <div className="flex gap-2 mb-2 justify-start" key={item.id}>
                 <Avatar>
                   <AvatarFallback>{item.sender.fullName[0]}</AvatarFallback>
                 </Avatar>
@@ -66,7 +67,7 @@ const ChatBox = () => {
                 </div>
               </div>
             ) : (
-              <div className="flex gap-2 mb-2 justify-end" key={item}>
+              <div className="flex gap-2 mb-2 justify-end" key={item.id}>
                 <div className="space-y-2 py-2 px-5 border rounded-se-2xl rounded-s-xl">
                   <p>{item.sender.fullName}</p>
                   <p className="text-gray-300">{item.content}</p>

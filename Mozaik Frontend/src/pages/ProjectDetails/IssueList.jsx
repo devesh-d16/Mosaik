@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {
   Card,
   CardContent,
@@ -23,11 +24,14 @@ import { useParams } from "react-router-dom";
 
 const IssueList = ({ title, status }) => {
   const dispatch = useDispatch();
-  const { issue } = useSelector((store) => store);
+  const issues = useSelector((state) => state.issue.issues);
   const { id } = useParams();
+
   useEffect(() => {
     dispatch(fetchIssues(id));
-  }, [id]);
+  }, [dispatch, id]);
+
+  const filteredIssues = issues.filter((issue) => issue.status === status);
 
   return (
     <div>
@@ -38,15 +42,13 @@ const IssueList = ({ title, status }) => {
           </CardHeader>
           <CardContent className="px-2">
             <div className="space-y-2">
-              {issue.issues
-                .filter((issue) => issue.status === status)
-                .map((item) => (
-                  <IssueCard projectID={id} item={item} key={item.id} />
-                ))}
+              {filteredIssues.map((item) => (
+                <IssueCard projectID={id} item={item} key={item.id} />
+              ))}
             </div>
           </CardContent>
           <CardFooter>
-            <DialogTrigger>
+            <DialogTrigger asChild>
               <Button
                 variant="outline"
                 className="w-full flex items-center gap-2"
