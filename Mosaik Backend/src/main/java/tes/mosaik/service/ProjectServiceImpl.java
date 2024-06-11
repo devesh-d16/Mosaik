@@ -99,10 +99,15 @@ public class ProjectServiceImpl implements ProjectService{
     public void addUserToProject(Long projectID, Long userID) throws Exception {
         Project project = getProjectByID(projectID);
         User user = userService.findUserProfileByID(userID);
-        if(!project.getTeam().contains(user)){
-            project.getChat().getUsers().add(user);
-            project.getTeam().add(user);
+
+        for(User member: project.getTeam()){
+            if(member.getId().equals(userID)){
+                return;
+            }
         }
+
+        project.getChat().getUsers().add(user);
+        project.getTeam().add(user);
         projectRepository.save(project);
     }
 

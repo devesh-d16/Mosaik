@@ -83,9 +83,10 @@ export const inviteToProject =
   async (dispatch) => {
     dispatch({ type: INVITE_TO_PROJECT_REQUEST });
     try {
-      const { data } = await api.post(
-        "/api/projects/invite" + { email, projectID }
-      );
+      const { data } = await api.post("/api/projects/invite", {
+        email,
+        projectID,
+      });
       console.log("invite project", data);
       dispatch({ type: INVITE_TO_PROJECT_SUCCESS, payload: data });
     } catch (error) {
@@ -94,16 +95,16 @@ export const inviteToProject =
   };
 
 export const acceptInvitation =
-  ({ invitationToken, navigate }) =>
+  ({ token, navigate }) =>
   async (dispatch) => {
     dispatch({ type: ACCEPT_INVITATION_REQUEST });
     try {
       const { data } = await api.get("/api/projects/accept_invitation", {
         params: {
-          token: invitationToken,
+          token,
         },
       });
-      navigate("/project" + data.projectID);
+      navigate("/project/" + data.projectID);
       console.log("accept invitation", data);
       dispatch({ type: ACCEPT_INVITATION_SUCCESS, payload: data });
     } catch (error) {

@@ -27,7 +27,7 @@ public class InvitationServiceImpl implements InvitationService{
         invitation.setToken(invitationToken);
 
         invitationRepository.save(invitation);
-        String invitationLink = "http://localhost:8080/accept_invitations/" + invitationToken;
+        String invitationLink = "http://localhost:5173/accept_invitation?token=" + invitationToken;
         emailService.sendEmailWithToken(email,invitationLink);
     }
 

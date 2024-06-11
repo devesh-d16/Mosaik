@@ -1,3 +1,4 @@
+import { inviteToProject } from "@/Redux/Project/Action";
 import { Button } from "@/components/ui/button";
 import { DialogClose } from "@/components/ui/dialog";
 import {
@@ -9,8 +10,12 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 
 const InviteUserForm = () => {
+  const dispatch = useDispatch();
+  const { id } = useParams();
   const form = useForm({
     // resolver:
     defaultValues: {
@@ -18,6 +23,7 @@ const InviteUserForm = () => {
     },
   });
   const onSubmit = (data) => {
+    dispatch(inviteToProject({ email: data.email, projectID: id }));
     console.log("Create project data", data);
   };
   return (
