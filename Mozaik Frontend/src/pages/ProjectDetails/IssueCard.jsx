@@ -50,7 +50,7 @@ const IssueCard = ({ item, projectID }) => {
       </CardHeader>
       <CardContent className="py-0">
         <div className="flex items-center justify-between">
-          <p>FBP - {1}</p>
+          <p>{item.description}</p>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button

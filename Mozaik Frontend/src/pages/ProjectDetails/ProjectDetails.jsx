@@ -79,7 +79,7 @@ const ProjectDetails = () => {
 
               <div className="flex">
                 <p className="w-36">Status :</p>
-                <Badge>{projectDetails?.status}</Badge>
+                <Badge>Pending</Badge>
               </div>
             </div>
 

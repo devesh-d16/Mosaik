@@ -50,7 +50,7 @@ const CreateIssueForm = ({ status }) => {
                     {...field}
                     type="text"
                     className="border w-full border-gray-700 py-5 px-5"
-                    placeholder="issueName..."
+                    placeholder="Issue Title"
                   />
                 </FormControl>
                 <FormMessage />
@@ -67,7 +67,7 @@ const CreateIssueForm = ({ status }) => {
                     {...field}
                     type="text"
                     className="border w-full border-gray-700 py-5 px-5"
-                    placeholder="description.."
+                    placeholder="Description"
                   />
                 </FormControl>
                 <FormMessage />

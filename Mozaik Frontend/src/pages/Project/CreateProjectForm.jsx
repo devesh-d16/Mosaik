@@ -59,7 +59,7 @@ const CreateProjectForm = () => {
                     {...field}
                     type="text"
                     className="border w-full border-gray-700 py-5 px-5"
-                    placeholder="project name..."
+                    placeholder="Project Name"
                   />
                 </FormControl>
                 <FormMessage />
@@ -76,7 +76,7 @@ const CreateProjectForm = () => {
                     {...field}
                     type="text"
                     className="border w-full border-gray-700 py-5 px-5"
-                    placeholder="project description..."
+                    placeholder="Project Description"
                   />
                 </FormControl>
                 <FormMessage />

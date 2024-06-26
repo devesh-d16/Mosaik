@@ -28,9 +28,9 @@ const Navbar = () => {
 
   return (
     <div className="border-b py-4 px-5 flex items-center justify-between">
-      <div className="flex items-center gap-3">
+      <div className="flex text-2xl items-center gap-3">
         <p onClick={() => navigate("/")} className="cursor-pointer">
-          Project Management
+          Mosaik
         </p>
         <Dialog>
           <DialogTrigger asChild>
